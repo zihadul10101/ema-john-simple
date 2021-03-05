@@ -21,24 +21,24 @@ function App() {
       <Header></Header>
       <Router>
         <Switch>
-          <Router path="/shop">
+          <Route path="/shop">
             <Shop></Shop>
-          </Router>
-          <Router path="/review">
+          </Route>
+          <Route path="/review">
             <Review></Review>
-          </Router>
-          <Router path="/inventory">
+          </Route>
+          <Route path="/inventory">
             <Inventory></Inventory>
-          </Router>
-          <Router exact path="/">
+          </Route>
+          <Route exact path="/">
             <Shop></Shop>
-          </Router>
-          <Router path="/product/:productKey">
+          </Route>
+        <Route path="/product/:productKey">
             <ProductDetail></ProductDetail>
-          </Router>
-          <Router path="*">
+          </Route>
+          <Route path="*">
             <Notfound></Notfound>
-          </Router>
+          </Route>
         </Switch>
       </Router>
 
