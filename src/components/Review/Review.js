@@ -7,7 +7,7 @@ import happyImage from '../../ema/images/giphy.gif';
 
 const Review = () => {
   const [cart, setCart] = useState([]);
-  const [orderPlaced , setOrderPlaced] = useState(false);
+  const [orderPlaced, setOrderPlaced] = useState(false);
 
   const handlePlaceOrder = () => {
     //console.log('order placed');
@@ -36,32 +36,32 @@ const Review = () => {
     setCart(cartProducts);
   }, [])
 
- let thankyou;
- if(orderPlaced){
-   thankyou = <img src={happyImage} alt=""/>
- }
+  let thankyou;
+  if (orderPlaced) {
+    thankyou = <img src={happyImage} alt="" />
+  }
   return (
-   
+
     <div className="twin-container">
-      
-        <div className="product-container">
-          {
-            cart.map(pd => <ReviewItems
-              key={pd.key}
-              removeProduct={removeProduct}
-              product={pd}></ReviewItems>)
-          }
-          {
-            thankyou
-          }
-        </div>
-        <div className="cart-container">
-          <Cart cart={cart}>
-            <button onClick={handlePlaceOrder} className="main-button">Place Order</button>
-          </Cart>
-        </div>
+
+      <div className="product-container">
+        {
+          cart.map(pd => <ReviewItems
+            key={pd.key}
+            removeProduct={removeProduct}
+            product={pd}></ReviewItems>)
+        }
+        {
+          thankyou
+        }
       </div>
-  
+      <div className="cart-container">
+        <Cart cart={cart}>
+          <button onClick={handlePlaceOrder} className="main-button">Place Order</button>
+        </Cart>
+      </div>
+    </div>
+
 
   );
 };
