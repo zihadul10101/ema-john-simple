@@ -3,6 +3,7 @@ import "firebase/auth";
 import firebaseConfig from './firebase.config';
 import { useContext, useState } from 'react';
 import { UserContext } from "../../App";
+import { useHistory, useLocation } from "react-router";
 
 !firebase.apps.length && firebase.initializeApp(firebaseConfig);
 
@@ -15,7 +16,10 @@ function Login() {
     password: '',
     photo: ''
   })
-  const [loggedInUser,setLoggedInUser] = useContext(UserContext);
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const history = useHistory();
+  const location = useLocation();
+  let { from } = location.state || { from: { pathname: "/" } };
   const provider = new firebase.auth.GoogleAuthProvider();
   const handleSignIn = () => {
     // console.log('clicked');
@@ -50,7 +54,7 @@ function Login() {
           success: false
         }
         setUser(signedOutUser);
-      //  console.log(res);
+        //  console.log(res);
       })
       .catch(err => {
 
@@ -99,6 +103,7 @@ function Login() {
         });
     }
     if (!newUser && user.email && user.password) {
+      console.log(user.email,user.password,newUser);
       firebase.auth().signInWithEmailAndPassword(user.email, user.password)
         .then((res) => {
           // Signed in
@@ -108,6 +113,7 @@ function Login() {
           setUser(newUserInfo);
           //console.log(res);
           setLoggedInUser(newUserInfo);
+          history.replace(from);
           console.log('sign in user info', res.user);
         })
         .catch((error) => {
@@ -126,25 +132,25 @@ function Login() {
 
     user.updateProfile({
       displayName: name
-     
-    }).then(function() {
+
+    }).then(function () {
       // Update successful.
       console.log('user name updated successfully');
-    }).catch(function(error) {
+    }).catch(function (error) {
       // An error happened.
       console.log(error);
     });
   }
   return (
-    <div style={{textAlign:'center'}}>
+    <div style={{ textAlign: 'center' }}>
       {
         user.isSignedIn ? <button onClick={handleSignOut}>Sign out</button> :
           <button onClick={handleSignIn}>Sign in</button>
       }
-      <br/>
-      <br/>
+      <br />
+      <br />
       <button>Log in using Facebook</button>
-      <br/>
+      <br />
       {
         user.isSignedIn && <div>Welcome, {user.name}
           <p>Your email: {user.email}</p>
@@ -162,7 +168,7 @@ function Login() {
         <br />
         <input type="password" name="password" onBlur={handleBlue} placeholder=" Your Password " required />
         <br />
-        <input type="submit" value={ newUser ? 'Sign up':'Sign in'} />
+        <input type="submit" value={newUser ? 'Sign up' : 'Sign in'} />
       </form>
       <p style={{ color: 'red' }}>{user.error}</p>
       {

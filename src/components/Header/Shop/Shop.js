@@ -22,7 +22,7 @@ const Shop = () => {
             // console.log(existingKey, saveCart[existingKey]);    
         })
         setCart(previousCart);
-    })
+    },[])
 
 
     const handleAddProduct = (product) => {

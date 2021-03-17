@@ -61,8 +61,6 @@ const Review = () => {
         </Cart>
       </div>
     </div>
-
-
   );
 };
 
